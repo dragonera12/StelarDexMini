@@ -1,7 +1,7 @@
 # Stellar DEX Mini (AMM Testnet V1.0)
 
 ![CI Status](https://github.com/dragonera12/StelarDexMini/actions/workflows/ci.yml/badge.svg)
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-blue?style=for-the-badge&logo=vercel)](https://stellar-dex-mini.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-blue?style=for-the-badge&logo=vercel)](https://stelar-dex-mini.vercel.app/)
 
 A high-performance, mobile-responsive Decentralized Exchange (DEX) built on **Stellar Soroban**. This application implements a Constant Product Automated Market Maker (AMM) that allows users to swap between **Native XLM** and **Classic RNDM** tokens using Stellar Asset Contracts (SAC).
 
