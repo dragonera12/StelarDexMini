@@ -18,12 +18,17 @@ jobs:
           targets: wasm32-unknown-unknown
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
-      - name: Install Stellar CLI
-        run: |
-          curl -sL https://raw.githubusercontent.com/stellar/stellar-cli/main/install.sh | sh
-          echo "$HOME/.stellar/bin" >> $GITHUB_PATH
       - name: Build Contracts
-        run: stellar contract build
+        run: |
+          # 1. Build the token dependency first
+          cargo build --package token --target wasm32-unknown-unknown --release
+          
+          # 2. Satisfy the pool contract's import path requirement
+          mkdir -p target/wasm32v1-none/release
+          cp target/wasm32-unknown-unknown/release/token.wasm target/wasm32v1-none/release/token.wasm
+          
+          # 3. Build the pool contract
+          cargo build --package pool --target wasm32-unknown-unknown --release
         working-directory: ./contracts
 
   frontend:
