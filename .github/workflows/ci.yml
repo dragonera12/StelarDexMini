@@ -1,4 +1,4 @@
-name: CI
+name: Stellar DEX Mini CI/CD
 
 on:
   push:
@@ -7,20 +7,35 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  contracts:
+    name: Contracts Build
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node_modules-cache: 'npm'
-        node-version: '20'
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+      - name: Build Contracts
+        run: cargo build --target wasm32-unknown-unknown --release
+        working-directory: ./contracts
 
-    - name: Install Dependencies
-      run: cd frontend && npm install
-
-    - name: Build Frontend
-      run: cd frontend && npm run build
+  frontend:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./frontend
+      - name: Build
+        run: npm run build
+        working-directory: ./frontend
