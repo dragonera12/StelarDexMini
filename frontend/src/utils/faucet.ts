@@ -1,0 +1,118 @@
+import {
+  Keypair,
+  TransactionBuilder,
+  Networks,
+  Operation,
+  Horizon,
+  rpc as SorobanRpc,
+  Contract,
+  xdr,
+  Address,
+} from "@stellar/stellar-sdk";
+import { RNDM_ASSET, RNDM_ISSUER_SECRET, CONFIG, ORIGINAL_TOKEN_A_ID, ORIGINAL_TOKEN_B_ID } from "../config";
+
+const HORIZON_SERVER = new Horizon.Server(CONFIG.HORIZON_URL);
+const SOROBAN_SERVER = new SorobanRpc.Server(CONFIG.SOROBAN_RPC_URL);
+
+// ─── Helpers ───────────────────────────────────────────────────────────────
+function addrToScVal(addr: string): xdr.ScVal {
+  return new Address(addr).toScVal();
+}
+
+function i128ToScVal(val: bigint): xdr.ScVal {
+  return xdr.ScVal.scvI128(new xdr.Int128Parts({
+    hi: xdr.Int64.fromString((val >> 64n).toString()),
+    lo: xdr.Uint64.fromString((val & 0xFFFFFFFFFFFFFFFFn).toString()),
+  }));
+}
+
+// ─── Soroban mint (for pool tokens — these show in the dApp balance) ──────
+const ADMIN_SECRET = "SDP74OMXFAX7VCFRFTK6L3K7PHDDJMG2ZU54F55AO7VRNPNPEVUKENYP";
+const SOROBAN_MINT_AMOUNT = 50_000_000_000n; // 5000 tokens (7 decimals)
+
+// ─── SAC funding (Since we use SACs, we just fund the Classic account) ────
+async function fundClassic(recipientAddress: string): Promise<void> {
+  // 1. Send 5000 Classic RNDM from Issuer
+  const issuerKeypair = Keypair.fromSecret(RNDM_ISSUER_SECRET);
+  const issuerAccount = await HORIZON_SERVER.loadAccount(issuerKeypair.publicKey());
+  
+  const tx = new TransactionBuilder(issuerAccount, {
+    fee: "1000",
+    networkPassphrase: Networks.TESTNET,
+  })
+    .addOperation(Operation.payment({
+      destination: recipientAddress,
+      asset: RNDM_ASSET,
+      amount: "5000",
+    }))
+    .setTimeout(30)
+    .build();
+    
+  tx.sign(issuerKeypair);
+  await HORIZON_SERVER.submitTransaction(tx);
+}
+
+// ─── Classic Stellar trustline helpers ────────────────────────────────────
+export async function hasTrustline(publicKey: string): Promise<boolean> {
+  try {
+    const account = await HORIZON_SERVER.loadAccount(publicKey);
+    return account.balances.some(
+      (b: any) => b.asset_code === "RNDM" && b.asset_issuer === RNDM_ASSET.getIssuer()
+    );
+  } catch {
+    return false;
+  }
+}
+
+export async function establishTrustline(
+  publicKey: string,
+  signTransaction: (xdr: string) => Promise<string>
+): Promise<void> {
+  const account = await HORIZON_SERVER.loadAccount(publicKey);
+  const tx = new TransactionBuilder(account, {
+    fee: "1000",
+    networkPassphrase: Networks.TESTNET,
+  })
+    .addOperation(Operation.changeTrust({ asset: RNDM_ASSET, limit: "1000000" }))
+    .setTimeout(30)
+    .build();
+
+  const signedXdr = await signTransaction(tx.toXDR());
+  const signedTx = TransactionBuilder.fromXDR(signedXdr, Networks.TESTNET);
+  const response = await HORIZON_SERVER.submitTransaction(signedTx);
+  if (!response.successful) throw new Error("Trustline transaction failed");
+}
+
+// ─── Mint both pool tokens (Soroban) + Classic RNDM if trustline exists ───
+export async function mintTestTokens(
+  recipientAddress: string,
+  // @ts-ignore
+  signTransaction: (xdr: string) => Promise<string>
+): Promise<{ needsTrustline: boolean }> {
+  const trusted = await hasTrustline(recipientAddress);
+  if (!trusted) return { needsTrustline: true };
+
+  // 1. Fund Classic RNDM (SAC automatically reflects this)
+  await fundClassic(recipientAddress);
+
+  return { needsTrustline: false };
+}
+
+// ─── Balance helpers ───────────────────────────────────────────────────────
+export async function getRndmBalance(publicKey: string): Promise<string> {
+  try {
+    const account = await HORIZON_SERVER.loadAccount(publicKey);
+    const b = account.balances.find(
+      (b: any) => b.asset_code === "RNDM" && b.asset_issuer === RNDM_ASSET.getIssuer()
+    );
+    return b ? parseFloat(b.balance).toFixed(2) : "0.00";
+  } catch { return "0.00"; }
+}
+
+export async function getXlmBalance(publicKey: string): Promise<string> {
+  try {
+    const account = await HORIZON_SERVER.loadAccount(publicKey);
+    const b = account.balances.find((b: any) => b.asset_type === "native");
+    return b ? parseFloat(b.balance).toFixed(2) : "0.00";
+  } catch { return "0.00"; }
+}
