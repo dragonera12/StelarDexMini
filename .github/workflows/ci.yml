@@ -18,8 +18,12 @@ jobs:
           targets: wasm32-unknown-unknown
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
+      - name: Install Stellar CLI
+        run: |
+          curl -sL https://raw.githubusercontent.com/stellar/stellar-cli/main/install.sh | sh
+          echo "$HOME/.stellar/bin" >> $GITHUB_PATH
       - name: Build Contracts
-        run: cargo build --target wasm32-unknown-unknown --release
+        run: stellar contract build
         working-directory: ./contracts
 
   frontend:
