@@ -4,31 +4,10 @@ import {
   Networks,
   Operation,
   Horizon,
-  rpc as SorobanRpc,
-  Contract,
-  xdr,
-  Address,
 } from "@stellar/stellar-sdk";
-import { RNDM_ASSET, RNDM_ISSUER_SECRET, CONFIG, ORIGINAL_TOKEN_A_ID, ORIGINAL_TOKEN_B_ID } from "../config";
+import { RNDM_ASSET, RNDM_ISSUER_SECRET, CONFIG } from "../config";
 
 const HORIZON_SERVER = new Horizon.Server(CONFIG.HORIZON_URL);
-const SOROBAN_SERVER = new SorobanRpc.Server(CONFIG.SOROBAN_RPC_URL);
-
-// ─── Helpers ───────────────────────────────────────────────────────────────
-function addrToScVal(addr: string): xdr.ScVal {
-  return new Address(addr).toScVal();
-}
-
-function i128ToScVal(val: bigint): xdr.ScVal {
-  return xdr.ScVal.scvI128(new xdr.Int128Parts({
-    hi: xdr.Int64.fromString((val >> 64n).toString()),
-    lo: xdr.Uint64.fromString((val & 0xFFFFFFFFFFFFFFFFn).toString()),
-  }));
-}
-
-// ─── Soroban mint (for pool tokens — these show in the dApp balance) ──────
-const ADMIN_SECRET = "SDP74OMXFAX7VCFRFTK6L3K7PHDDJMG2ZU54F55AO7VRNPNPEVUKENYP";
-const SOROBAN_MINT_AMOUNT = 50_000_000_000n; // 5000 tokens (7 decimals)
 
 // ─── SAC funding (Since we use SACs, we just fund the Classic account) ────
 async function fundClassic(recipientAddress: string): Promise<void> {
