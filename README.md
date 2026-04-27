@@ -40,6 +40,17 @@ A high-performance, mobile-responsive Decentralized Exchange (DEX) built on **St
 ### Analytics View
 ![Analytics](public/screenshots/analytics.png)
 
+### User Interface Gallery
+````carousel
+![Swap Interface](public/screenshots/swap_interface.png)
+<!-- slide -->
+![Swap with Details](public/screenshots/swap_details.png)
+<!-- slide -->
+![Add Liquidity & Wallet](public/screenshots/liquidity_add_freighter.png)
+<!-- slide -->
+![Success State](public/screenshots/liquidity_success.png)
+````
+
 ## 🧪 Testing
 
 The project includes a robust test suite for all Soroban smart contracts.
