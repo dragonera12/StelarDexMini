@@ -34,7 +34,7 @@ A high-performance, mobile-responsive Decentralized Exchange (DEX) built on **St
 
 ## 🎥 Application Demo
 
-https://github.com/dragonera12/StelarDexMini/blob/main/public/demo.mp4?raw=true
+![Stellar DEX Demo](public/screenshots/demo.gif)
 
 ## 📸 Screenshots
 
