@@ -32,6 +32,10 @@ A high-performance, mobile-responsive Decentralized Exchange (DEX) built on **St
 | **RNDM Asset Issuer** | `GBZOLFASCCGMZHWKMF5GVEDEXTV2HD2W3BKW6SP5D5CPKQ3T75T36I5G` |
 | **Initialization TX** | [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/88f280e28f322316e2f16805d76d494883445839999778278278278278278278) |
 
+## 🎥 Application Demo
+
+https://github.com/dragonera12/StelarDexMini/blob/main/public/demo.mp4?raw=true
+
 ## 📸 Screenshots
 
 ### Desktop Dashboard
