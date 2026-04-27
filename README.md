@@ -45,15 +45,14 @@ https://github.com/dragonera12/StelarDexMini/blob/main/public/demo.mp4?raw=true
 ![Analytics](public/screenshots/analytics.png)
 
 ### User Interface Gallery
-````carousel
-![Swap Interface](public/screenshots/swap_interface.png)
-<!-- slide -->
-![Swap with Details](public/screenshots/swap_details.png)
-<!-- slide -->
-![Add Liquidity & Wallet](public/screenshots/liquidity_add_freighter.png)
-<!-- slide -->
-![Success State](public/screenshots/liquidity_success.png)
-````
+
+| Swap Interface | Swap Details |
+|:---:|:---:|
+| ![Swap Interface](public/screenshots/swap_interface.png) | ![Swap Details](public/screenshots/swap_details.png) |
+
+| Add Liquidity | Success State |
+|:---:|:---:|
+| ![Add Liquidity](public/screenshots/liquidity_add_freighter.png) | ![Success State](public/screenshots/liquidity_success.png) |
 
 ## 🧪 Testing
 
