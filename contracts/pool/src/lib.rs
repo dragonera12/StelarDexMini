@@ -2,6 +2,8 @@
 
 use soroban_sdk::{contract, contractimpl, contracttype, symbol_short, Address, Env};
 
+mod test;
+
 mod token {
     soroban_sdk::contractimport!(file = "../target/wasm32v1-none/release/token.wasm");
 }

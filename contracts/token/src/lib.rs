@@ -2,6 +2,8 @@
 
 use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, String, symbol_short};
 
+mod test;
+
 #[contracttype]
 pub enum TokenDataKey {
     Admin,

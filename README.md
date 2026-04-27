@@ -35,10 +35,25 @@ A high-performance, mobile-responsive Decentralized Exchange (DEX) built on **St
 ## 📸 Screenshots
 
 ### Desktop Dashboard
-![Dashboard](https://raw.githubusercontent.com/dragonera12/StelarDexMini/main/public/screenshots/dashboard.png)
+![Dashboard](file:///Users/shivay/.gemini/antigravity/brain/8d27d433-5390-4db8-96a5-93a5b452af65/stellar_dex_swap_ui_1777285799351.png)
 
-### Mobile Responsive View
-![Mobile](https://raw.githubusercontent.com/dragonera12/StelarDexMini/main/public/screenshots/mobile.png)
+### Analytics View
+![Analytics](file:///Users/shivay/.gemini/antigravity/brain/8d27d433-5390-4db8-96a5-93a5b452af65/stellar_dex_analytics_ui_1777285824764.png)
+
+## 🧪 Testing
+
+The project includes a robust test suite for all Soroban smart contracts.
+
+### Running Contract Tests
+Navigate to the `contracts` directory and run:
+```bash
+cargo test
+```
+
+Current test coverage includes:
+- **Liquidity Pool**: Constant product math, fee logic, and reserve management.
+- **Factory**: Contract registration and pair mapping.
+- **Token**: SAC-compliant token operations and authorization checks.
 
 ## 🛠 Installation & Local Development
 
