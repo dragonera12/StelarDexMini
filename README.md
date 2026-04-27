@@ -35,10 +35,10 @@ A high-performance, mobile-responsive Decentralized Exchange (DEX) built on **St
 ## 📸 Screenshots
 
 ### Desktop Dashboard
-![Dashboard](file:///Users/shivay/.gemini/antigravity/brain/8d27d433-5390-4db8-96a5-93a5b452af65/stellar_dex_swap_ui_1777285799351.png)
+![Dashboard](public/screenshots/dashboard.png)
 
 ### Analytics View
-![Analytics](file:///Users/shivay/.gemini/antigravity/brain/8d27d433-5390-4db8-96a5-93a5b452af65/stellar_dex_analytics_ui_1777285824764.png)
+![Analytics](public/screenshots/analytics.png)
 
 ## 🧪 Testing
 
