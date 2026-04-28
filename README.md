@@ -46,9 +46,13 @@ A high-performance, mobile-responsive Decentralized Exchange (DEX) built on **St
 
 ### User Interface Gallery
 
-| Swap Interface | Swap Successful | Add Liquidity |
+| Swap Interface | Swap Details | Swap Successful |
 |:---:|:---:|:---:|
-| ![Swap Interface](public/screenshots/swap_interface.png) | ![Swap Successful](public/screenshots/swap_success.png) | ![Add Liquidity](public/screenshots/liquidity_add_freighter.png) |
+| ![Swap Interface](public/screenshots/swap_interface.png) | ![Swap Details](public/screenshots/swap_details.png) | ![Swap Successful](public/screenshots/swap_success.png) |
+
+| Add Liquidity | Liquidity Success | Mobile View |
+|:---:|:---:|:---:|
+| ![Add Liquidity](public/screenshots/liquidity_add_freighter.png) | ![Liquidity Success](public/screenshots/liquidity_success.png) | ![Mobile View](public/screenshots/mobile.png) |
 
 ## 🧪 Testing
 
